@@ -4,12 +4,6 @@ authors:
   - family-names: Morandi
     given-names: Alessandro
     affiliation: "Politecnico di Torino, Dipartimento di Energia 'Galileo Ferraris'"
-  - family-names: Meschini
-    given-names: Samuele
-    affiliation: "Politecnico di Torino, Dipartimento di Energia 'Galileo Ferraris'"
-  - family-names: Testoni
-    given-names: Raffaella
-    affiliation: "Politecnico di Torino, Dipartimento di Energia 'Galileo Ferraris'"
 title: "System Modeling of Fusion Fuel Cycle Dynamics in a Multispecies Plasma"
 version: 0.1.0
 date-released: 2026-03-12
