@@ -195,3 +195,6 @@ outputs/
 *.pkl
 *.html
 *.csv
+
+# Windows Zone.Identifier metadata files
+*:Zone.Identifier
