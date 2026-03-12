@@ -1,0 +1,307 @@
+# ============================================================================
+# DD Startup Postprocessing Configuration
+# ============================================================================
+# This YAML file configures the postprocessing of DD startup analysis results.
+# It specifies which files to process, what variables to analyze, filters to
+# apply, and what plots to generate.
+
+# ============================================================================
+# FILES TO PROCESS
+# ============================================================================
+# Specify HDF5 file(s) or folder(s) to analyze.
+# Options:
+#   - "latest": automatically find the most recent FOLDER in outputs/ (recommended)
+#   - Folder name: "20251008_081422_parametric_T_seeded"
+#   - Single file: "outputs/dd_startup_20250927_234519_parametric_lump.h5"
+#   - Multiple folders: ["20251008_081422_parametric_T_seeded", "20251007_153020_parametric_lump"]
+# 
+# Note: When using "latest" or a folder, all HDF5 files in that folder are processed
+#       and outputs are saved back to the same folder automatically.
+
+files: 
+- 'paper_parametric_T_seeded'  # Folder name (relative to outputs/)
+- 'paper_parametric_lump'  # Default: process files in the latest folder
+
+# Alternative examples:
+# files: "20251008_081422_parametric_T_seeded"  # Specific folder
+# files: "outputs/dd_startup_20250927_234519_parametric_lump.h5"  # Specific file
+# files:
+#   - "20251008_081422_parametric_T_seeded"
+#   - "20251007_153020_parametric_lump"
+
+# ============================================================================
+# ADDITIONAL VARIABLES
+# ============================================================================
+# Additional variables to compute or passthrough from existing metrics for analysis and plotting.
+# These can be used as target variables or in plots.
+# Note: For LaTeX symbols, just use the string directly (no Python r"..." syntax needed in YAML)
+additional_variables:
+  K_el:
+    expr: unrealized_profits / (capacity_factor*(eta_th*P_DT_eq - P_aux_DT_eq))
+    unit: "$/W"            # optional override
+    symbol: "$K_{el}$"     # LaTeX symbol for plots
+
+  TBE_percent:
+    expr: TBE*V_plasma*100 # BE CAREFUL! THIS IS DEFINED FOR AN OLDER VERSION OF THE CODE
+    unit: "%"            # optional override
+    symbol: "TBE"
+  c_T:
+    expr: unrealized_profits / I_target
+    unit: "$/kg"
+    symbol: "$c_T$"
+
+  Tdot_tot_eff:
+    expr: capacity_factor * (TBR_DDn * P_DDn/5.239119771E-13 + TBR_DT * P_DT/2.819832048E-12 + P_DT/2.819832048E-12/(TBE_percent/100) + P_DDp/6.456774519E-13 - P_DT/2.819832048E-12)
+    unit: "1/s"
+    symbol: "$\\dot{T}_{tot}$" 
+# ============================================================================
+# TARGET VARIABLES
+# ============================================================================
+# Output metrics to analyze and visualize
+# Common options:
+#   - t_startup: Time to reach DT operation
+#   - unrealized_profits: Economic cost of DD startup
+target_variables:
+  - c_T
+  - K_el
+  - unrealized_profits
+  - t_startup
+
+# ============================================================================
+# FILTERS
+# ============================================================================
+# Filter parameter combinations before analysis
+
+filters:
+- K_el < 5
+- K_el > 0
+- c_T < 2e9
+- c_T > 0
+# - P_DT_eq <= 3e9
+# - P_aux_DT_eq <= 100e6
+
+# ============================================================================
+# PLOT CONFIGURATION
+# ============================================================================
+# Specify which types of plots to generate
+
+plots:
+
+  style:
+    show_titles: false   # hide all axes/suptitles
+    font_scale: 1.5      # enlarge all common text sizes
+
+  # Generate all plot types
+  generate_all: false
+  
+  # Or specify individual plot types (when generate_all is false)
+  importance: false       # Effect-size importance matrix (Cohen's d)
+  kmeans: false           # KMeans clustering analysis
+  contour: false          # 2D pairwise contour plots
+  
+  
+  # ==========================================================================
+  # QUARTILE PROBABILITY PLOT SETTINGS
+  # ==========================================================================
+  quartprob: true        # Quartile probability plots
+  
+  quartprob_settings:
+    include_failed_in_count: true   # Count failed cases in denominator for probability normalization
+                                     # - true: P(Q1|x) + P(Q2|x) + P(Q3|x) + P(Q4|x) + P(FAILED|x) = 1.0
+                                     # - false: Only count successful cases, P(Q1|x) + ... + P(Q4|x) = 1.0
+    display_failed_in_plot: false   # Display grey FAILED line/bar in plot
+                                     # - true: Show FAILED probability (grey line/bar)
+                                     # - false: Hide FAILED from visualization (but still counts if include_failed_in_count=true)
+  
+  # ==========================================================================
+  # 3D SURFACE SETTINGS
+  # ==========================================================================
+  surface3d: true         # Interactive 3D surface (3 inputs as axes, target as color)
+  surface3d_settings:
+    axes: [Tdot_tot_eff, I_target, V_plasma]  # Three inputs -> x/y/z axes (auto-picks first 3 numeric if missing)
+    grid_size: 60          # Points per axis for interpolation grid (6-60). Larger = smoother & heavier.
+    max_interp: 500000      # Sample cap for interpolation (prevents OOM on very large datasets)
+    interpolate_method: linear   # 'linear' (default) or 'nearest' for sparse data
+    surface_count: 1       # Number of isosurfaces through the volume (1-10)
+    surface_opacity: 0.4   # 0-1 opacity for the interpolated volume (lower = see through layers)
+    colorscale: Viridis    # Any Plotly colorscale name
+    clip_quantile: none    # Clip target to reduce color blow-up from outliers (None to disable)
+    max_scatter: 2000      # Sample cap for real points overlay (0 or null = all points)
+    point_size: 3          # Marker size for the real points (smaller = less clutter)
+    show_scatter: false     # Show scattered data points on top of isosurfaces
+    show_point_colorscale: false  # Show separate colorbar for the scatter points
+  # ==========================================================================
+  # KDE QUARTILE PLOT SETTINGS
+  # ==========================================================================
+  kde: false              # Kernel density estimation quartile plots
+  
+  # Plot-specific settings
+  kde_settings:
+    n_quartiles: 4       # Number of quartiles for KDE plots
+    save_csv: true       # Save quartile extremes to CSV
+
+  # ==========================================================================
+  # PARALLEL COORDINATES PLOT SETTINGS
+  # ==========================================================================
+  parcoords: false        # Parallel coordinates plots
+  
+  parcoords_settings:
+    n_color_chunks: 6    # Number of discrete color levels
+    max_samples: 1000000 # Maximum number of samples to plot
+  
+  # ==========================================================================
+  # PROBABILITY DENSITY FUNCTION (PDF) SETTINGS
+  # ==========================================================================
+  pdf: false              # Probability density function plots
+  
+  pdf_settings:
+    n_bins: 10000        # Number of histogram bins (when smooth=false)
+    use_log_scale: true  # Use logarithmic x-axis
+    smooth: true        # Use Kernel Density Estimation for smooth curves
+                         # - false: Traditional histogram bins (default)
+                         # - true: Smooth KDE curves (better for visualization)
+    kde_bandwidth: scott # KDE bandwidth method: 'scott', 'silverman', or float
+                         # Only used when smooth=true
+  
+  # ==========================================================================
+  # SHAP PLOT SETTINGS
+  # ==========================================================================  
+  shap: false            # SHAP (SHapley Additive exPlanations) plots
+
+  shap_settings:
+    model_type: tree     # Surrogate model type: 'tree', 'linear', or 'kernel'
+                         # - 'tree': Gradient Boosting (fast, accurate for nonlinear)
+                         # - 'linear': Ridge Regression (fast, assumes linearity)
+                         # - 'kernel': Model-agnostic (slower, most general)
+    max_samples: 100000000    # Maximum samples for SHAP computation (performance)
+    interpolate: true   # Use smooth interpolated density plots instead of scatter
+                         # - false: Traditional scatter beeswarm plot (default)
+                         # - true: Smooth continuous density visualization
+    plot_types:          # SHAP visualizations to generate
+      - summary          # Beeswarm plot showing feature impacts
+      - summary_bar      # Bar plot of mean absolute SHAP values
+      - dependence       # Dependence plots for top features
+      - csv              # Save SHAP values and importance to CSV
+      # Optional additional plots:
+      # - waterfall      # Waterfall plots for individual predictions
+      # - force          # Force plots (interactive HTML)
+      # - summary_violin # Violin plot distribution
+
+  # ==========================================================================
+  # PAIRWISE CONTOUR PLOT SETTINGS - ENHANCED WITH MACHINE LEARNING
+  # ==========================================================================
+  ml_pairwise: true      # ML-based pairwise partial dependence plots - DISABLED (memory intensive)
+  
+  ml_pairwise_settings:
+    pairs: all          # Pairs to plot: 'auto' (top 5x5), 'all', or list like [[0,1], [2,3]]
+                         # - 'auto': Plots top 5 most important parameters (10-15 plots)
+                         # - 'all': Plots all possible pairs (can be many plots!)
+                         # - Custom list: [[0,1], [2,4]] for specific parameter index pairs
+    grid_size: 70        # Resolution of PDP grid (70x70 = 4900 points per plot)
+    max_train_samples: 10000000000  # Maximum samples to use for ML model training (0 or very large = use all)
+    use_log_target: auto # Log transform for target: 'auto' (detect based on range), true (force), false (disable)
+                         # 'auto' applies log if target spans >3 orders of magnitude (recommended)
+                         # Features are always standardized (handles n_tot~1e20, others~1)
+    hidden: [128, 64, 32]    # MLP hidden layer sizes
+    dropout: 0.6         # Dropout rate (0.5-0.7 recommended; higher = less overfitting)
+    weight_decay: 0.01   # L2 regularization (0.01 = moderate; higher = more regularization)
+    use_augmentation: true  # Enable data augmentation with Gaussian noise
+    augment_noise_factor: 0.2  # Noise level for augmentation (fraction of feature std)
+                               # 0 = disable, 0.1-0.3 = light (recommended), 0.5 = default (heavy)
+                               # Adds noisy copies of training data for regularization
+                               # Pros: Better generalization, robustness to input variations
+                               # Cons: 2x memory usage, 2x training time per epoch
+    verbose: true       # Print detailed training progress
+                         # Set to true for debugging or monitoring training
+
+  # ==========================================================================
+  # STRIP PLOT SETTINGS
+  # ==========================================================================
+  strip: true            # Strip plots with trends (comparing multiple metrics)
+  
+  strip_settings:
+    # Strip plots compare multiple metrics with trend lines and uncertainty bands
+    # Metrics to plot on y-axes (1-3 metrics). Can use computed metrics like "P_DT_eq - P_aux"
+    y_metrics: 
+      - K_el
+      - P_DT_eq
+    
+    # Metric to sort simulations by (must be in data or in y_metrics)
+    sort_by: t_startup
+    
+    # Performance settings
+    use_datashader: false  # Use datashader for fast rendering of large datasets (>50k points)
+                          # Falls back to matplotlib if datashader not installed
+    verbose: true         # Show progress bar and detailed output
+    
+    # Unit conversions for better readability
+    # Format: metric_name: {factor: conversion_factor, unit: 'unit_string'}
+    unit_conversions:
+      t_startup:
+        factor: 1.1574074074074073e-05  # Convert seconds to days (1 / (24*3600))
+        unit: 'days'
+      unrealized_profits:
+        factor: 1.0e-6  # Convert dollars to millions of dollars
+        unit: 'M$'
+      P_DT_eq:
+        factor: 1.0e-6  # Convert watts to megawatts
+        unit: 'MW'
+      P_aux:
+        factor: 1.0e-6  # Convert watts to megawatts
+        unit: 'MW'
+    
+    # Whether to mark optimal point (minimizing all metrics)
+    optimal_point: false
+    
+    # LOWESS smoothing fraction (0.05-0.25, default: 0.12)
+    frac: 0.12
+    
+    # Figure size [width, height] in inches
+    figsize: [14, 6]
+
+# ============================================================================
+# CROSS-RUN COMPARISON (OPTIONAL)
+# ============================================================================
+# compare:
+  # List of H5 files or folders to compare (accepts "latest")
+  files:
+    - "outputs/test_parametric_T_seeded"
+    - "outputs/test_parametric_lump"
+  targets:
+    - unrealized_profits
+    - t_startup
+    - K_el
+  out: "outputs/compare_tests_Kel5"
+  show_titles: false
+
+
+# ============================================================================
+# OUTPUT SETTINGS
+# ============================================================================
+# Configure where plots and results are saved
+
+output:
+  # Directory for saving plots
+  # - "default": save to the same folder as input files (latest folder in outputs/)
+  # - Custom path: "my_results/plots/"
+  directory: "default"
+  
+  # File naming options
+  include_timestamp: false  # Add timestamp to output filenames
+  prefix: ""                # Add prefix to all output filenames
+  
+  # Image format and quality
+  image_format: "png"       # Format for static plots (png, jpg, svg, pdf)
+  dpi: 150                  # Resolution for raster images
+  
+  # Console output verbosity
+  verbose: true             # Print detailed progress information
+
+
+# ============================================================================
+# ADVANCED OPTIONS
+# ============================================================================
+
+runtime:
+  downcast_float32: true
+  # chunk_size: 10000

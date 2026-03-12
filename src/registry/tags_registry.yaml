@@ -1,0 +1,115 @@
+analysis_types:
+  multispecies:
+    defaults:
+      targets:
+      - target_specie: T
+        metric: fraction
+        value: 0.5
+      vector_length: 200
+      max_simulation_time: 315360000.0   # 10 years in seconds
+  dd_startup_lump:
+    defaults:
+      targets: []   # must be supplied by user (storage-inventory target)
+      vector_length: 100
+      max_simulation_time: 315360000.0
+    solver_presets:
+      initial_conditions:
+        D:
+          f_0: 1.0
+        T:
+          f_0: 0.0
+        He3:
+          f_0: 0.0
+        He4:
+          f_0: 0.0
+      species_params:
+        D:
+          enable_plasma_channel: true
+          tau_ifc: .inf
+          tau_ofc: .inf
+          lambda_decay: 0.0
+          N_stor_min: 0.0
+          Ndot_max: .inf
+        T:
+          enable_plasma_channel: true
+        He3:
+          enable_plasma_channel: true
+        He4:
+          enable_plasma_channel: true
+  dd_startup_tseeded:
+    defaults:
+      targets:
+      - target_specie: T
+        metric: fraction
+        value: 0.5
+      vector_length: 100
+      max_simulation_time: 315360000.0
+    solver_presets:
+      initial_conditions:
+        D:
+          f_0: 1.0
+        T:
+          f_0: 0.0
+        He3:
+          f_0: 0.0
+        He4:
+          f_0: 0.0
+      species_params:
+        D:
+          enable_plasma_channel: true
+          tau_ifc: .inf
+          tau_ofc: .inf
+          lambda_decay: 0.0
+          N_stor_min: 0.0
+          Ndot_max: .inf
+        T:
+          enable_plasma_channel: true
+        He3:
+          enable_plasma_channel: true
+        He4:
+          enable_plasma_channel: true
+
+dtypes:
+- float
+- int
+- bool
+- str
+
+injection_modes:
+- direct
+- auto
+- custom
+- constant_density
+- "off"
+
+custom_injection:
+  allowed_functions:
+  - abs
+  - min
+  - max
+  allowed_variables:
+  - t
+  - V_plasma
+  - n_tot
+  - N_ifc
+  - N_ofc
+  - N_stor
+  - n
+  - tau_p
+  - tau_ifc
+  - tau_ofc
+  - lambda_decay
+  - N_stor_min
+  - Ndot_max
+  state_templates:
+  - N_ifc_{species}
+  - N_ofc_{species}
+  - N_stor_{species}
+  - n_{species}
+  param_templates:
+  - tau_p_{species}
+  - tau_ifc_{species}
+  - tau_ofc_{species}
+  - lambda_decay_{species}
+  - N_stor_min_{species}
+  - Ndot_max_{species}

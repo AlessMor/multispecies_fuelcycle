@@ -1,0 +1,19 @@
+# Configuration for parametric T_seeded analysis (profiling tests)
+# Designed for 10,000 combinations
+
+# Analysis settings
+analysis_type: T_seeded  # T_seeded or lump
+method: parametric       # parametric or sobol
+
+# Analysis-specific parameters
+vector_length: 200       # Realistic resolution for profiling
+total_time: 31536000     # 1 year
+
+# Performance settings
+n_jobs: null             # Auto-detect for optimal parallelization
+chunk_size: null         # null for auto-calculate
+batch_size: null         # null for auto-calculate
+
+# Output settings
+output_dir: /tmp/ddstartup_profiling_tseeded
+verbose: false

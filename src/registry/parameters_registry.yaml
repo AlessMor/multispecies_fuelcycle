@@ -1,0 +1,477 @@
+params:
+# REACTOR PARAMETERS
+  V_plasma:
+    dtype: float
+    unit: m^3
+    default: 2000.0
+    description: Plasma volume
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  T_i:
+    dtype: float
+    unit: keV
+    default: 20.0
+    description: Ion temperature
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  n_tot:
+    dtype: float
+    unit: 1/m^3
+    default: 7.0e+19
+    description: Total ion density
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  TBR_DT:
+    dtype: float
+    unit: dimensionless
+    default: 1.3
+    description: Tritium breeding rate from DT branch
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  TBR_DDn:
+    dtype: float
+    unit: dimensionless
+    default: 1.0
+    description: Tritium breeding rate from DDn branch
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  P_aux:
+    dtype: float
+    unit: W
+    default: .nan
+    vector: true
+    description: Auxiliary heating power profile (computed from power balance when
+      null)
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  P_aux_DT_eq:
+    dtype: float
+    unit: W
+    default: .nan
+    vector: true
+    description: DT-equilibrium auxiliary power profile (computed from power balance
+      when null)
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  eta_th:
+    dtype: float
+    unit: dimensionless
+    default: 0.35
+    description: Thermal-to-electric conversion efficiency
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  capacity_factor:
+    dtype: float
+    unit: dimensionless
+    default: 0.75
+    description: Plant capacity factor
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  price_of_electricity:
+    dtype: float
+    unit: 1/J
+    default: 6.944444e-08
+    description: Electricity sale price
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+# SPECIES PARAMETERS
+  f_{species}_0:
+    dtype: float
+    unit: dimensionless
+    description: Initial plasma fraction for {species}
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  tau_p_{species}:
+    dtype: float
+    unit: s
+    description: Particle confinement time for {species}
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  lambda_decay_{species}:
+    dtype: float
+    unit: 1/s
+    description: Radioactive decay constant for {species}
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  tau_ifc_{species}:
+    dtype: float
+    unit: s
+    description: Inner fuelcycle residence time for {species}
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  tau_ofc_{species}:
+    dtype: float
+    unit: s
+    description: Out-vessel fuel cycle residence time for {species}
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  N_ofc_0_{species}:
+    dtype: float
+    unit: dimensionless
+    description: Initial outer fuel cycle inventory for {species} in number of atoms.
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  N_ifc_0_{species}:
+    dtype: float
+    unit: dimensionless
+    description: Initial inner fuel cycle inventory for {species} in number of atoms.
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  N_stor_0_{species}:
+    dtype: float
+    unit: dimensionless
+    description: Initial storage inventory for {species} in number of atoms.
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  N_stor_min_{species}:
+    dtype: float
+    unit: dimensionless
+    description: Minimum storage inventory for {species} in number of atoms.
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  Ndot_max_{species}:
+    dtype: float
+    unit: 1/s
+    description: Maximum external injection rate for {species}
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  inject_from_storage_{species}:
+    dtype: bool
+    unit: null
+    description: If true, species injection drains N_stor; if false, injection is external and does not drain storage
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  injection_mode_{species}:
+    dtype: str
+    unit: null
+    description: Per-species injection controller mode (direct, auto, custom, constant_density, off)
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  injection_custom_function_{species}:
+    dtype: str
+    unit: null
+    description: Per-species custom injection expression used when injection_mode is custom
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  enable_plasma_channel_{species}:
+    dtype: bool
+    unit: null
+    description: Enable plasma transport/reaction channel for {species}
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  n_{species}:
+    dtype: float
+    unit: 1/m^3
+    description: Plasma density of {species}
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  N_ofc_{species}:
+    dtype: float
+    unit: dimensionless
+    description: Outer fuel cycle inventory of {species} in number of atoms.
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  N_ifc_{species}:
+    dtype: float
+    unit: dimensionless
+    description: Inner fuel cycle inventory of {species} in number of atoms.
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  N_stor_{species}:
+    dtype: float
+    unit: dimensionless
+    description: Storage inventory of {species} in number of atoms.
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  Ndot_inj_{species}:
+    dtype: float
+    unit: 1/s
+    description: Injection rate of {species} into plasma.
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+# RUN PARAMETERS
+  max_simulation_time:
+    dtype: float
+    unit: s
+    default: 315576000.0
+    description: Maximum simulation time
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  vector_length:
+    dtype: int
+    unit: dimensionless
+    default: 1000
+    description: Solver/output vector length
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+# OUTPUT METRICS
+  t_startup:
+    dtype: float
+    unit: s
+    description: Time required to reach startup criterion
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  sol_success:
+    dtype: bool
+    unit: null
+    description: True when the solver finishes successfully
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  error:
+    dtype: str
+    unit: null
+    description: Error message produced by solver or validation
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  t:
+    dtype: float
+    unit: s
+    description: Simulation time grid
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_DDn:
+    dtype: float
+    unit: W
+    description: DDn fusion power profile
+    vector: true
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  P_DDp:
+    dtype: float
+    unit: W
+    description: DDp fusion power profile
+    vector: true
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  P_DT:
+    dtype: float
+    unit: W
+    description: DT fusion power profile
+    vector: true
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  P_DHe3:
+    dtype: float
+    unit: W
+    description: DHe3 fusion power profile
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_TT:
+    dtype: float
+    unit: W
+    description: TT fusion power profile
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_He3He3:
+    dtype: float
+    unit: W
+    description: He3He3 fusion power profile
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_THe3_ch1:
+    dtype: float
+    unit: W
+    description: THe3 branch 1 fusion power profile
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_THe3_ch2:
+    dtype: float
+    unit: W
+    description: THe3 branch 2 fusion power profile
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_THe3_ch3:
+    dtype: float
+    unit: W
+    description: THe3 branch 3 fusion power profile
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_fusion_total:
+    dtype: float
+    unit: W
+    description: Total fusion power profile from all active channels
+    vector: true
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  P_DT_eq:
+    dtype: float
+    unit: W
+    description: DT-equilibrium reference fusion power
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  TBE:
+    dtype: float
+    unit: dimensionless
+    description: Tritium breeding efficiency profile
+    vector: true
+    analysis_types:
+    - dd_startup_tseeded
+    - multispecies
+  Q_DD:
+    dtype: float
+    unit: dimensionless
+    description: DD startup gain factor
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  Q_DT_eq:
+    dtype: float
+    unit: dimensionless
+    description: DT-equilibrium gain factor
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  E_lost:
+    dtype: float
+    unit: J
+    description: Net electrical energy lost during startup versus DT-equilibrium reference
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  unrealized_profits:
+    dtype: float
+    unit: USD
+    description: Startup unrealized profits relative to DT-equilibrium reference
+    analysis_types:
+    - dd_startup_lump
+    - dd_startup_tseeded
+    - multispecies
+  E_fusion_startup:
+    dtype: float
+    unit: J
+    description: Integrated startup fusion energy from all channels
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  E_fusion_DT_eq:
+    dtype: float
+    unit: J
+    description: DT-equilibrium reference fusion energy over startup duration
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  E_aux_startup:
+    dtype: float
+    unit: J
+    description: Integrated startup auxiliary energy
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded
+  E_aux_DT_eq:
+    dtype: float
+    unit: J
+    description: DT-equilibrium reference auxiliary energy over startup duration
+    analysis_types:
+    - multispecies
+    - dd_startup_lump
+    - dd_startup_tseeded

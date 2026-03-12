@@ -1,0 +1,88 @@
+# Dictionary of allowed fusion reactions, their aliases, and canonical metadata.
+# Energies are normalized to Joules at registry-load time.
+reactions:
+  DD_p:
+    aliases:
+    - ddp
+    - d_d_p
+    - d(d,p)t
+    symbol: D + D -> T + p
+    reactivity_channel: sigmav_DD_p
+    energy:
+      value: 4.03
+      unit: MeV
+  DD_n:
+    aliases:
+    - ddn
+    - d_d_n
+    - d(d,n)he3
+    symbol: D + D -> He3 + n
+    reactivity_channel: sigmav_DD_n
+    energy:
+      value: 3.46
+      unit: MeV
+  DT:
+    aliases:
+    - d_t
+    - dt
+    - d(t,n)he4
+    symbol: D + T -> He4 + n
+    reactivity_channel: sigmav_DT
+    energy:
+      value: 17.6
+      unit: MeV
+  DHe3:
+    aliases:
+    - dhe3
+    - d_he3
+    - d(he3,p)he4
+    symbol: D + He3 -> He4 + p
+    reactivity_channel: sigmav_DHe3
+    energy:
+      value: 18.0153
+      unit: MeV
+  TT:
+    aliases:
+    - tt
+    - t_t
+    symbol: T + T -> He4 + 2n
+    reactivity_channel: sigmav_TT
+    energy:
+      value: 11.33
+      unit: MeV
+  He3He3:
+    aliases:
+    - he3he3
+    - he3_he3
+    symbol: He3 + He3 -> channels
+    reactivity_channel: sigmav_He3He3
+    energy:
+      value: 12.86
+      unit: MeV
+  THe3_ch1:
+    aliases:
+    - the3ch1
+    - t_he3_ch1
+    symbol: T + He3 branch 1
+    reactivity_channel: sigmav_THe3_ch1
+    energy:
+      value: 12.10
+      unit: MeV
+  THe3_ch2:
+    aliases:
+    - the3ch2
+    - t_he3_ch2
+    symbol: T + He3 branch 2
+    reactivity_channel: sigmav_THe3_ch2
+    energy:
+      value: 14.32
+      unit: MeV
+  THe3_ch3:
+    aliases:
+    - the3ch3
+    - t_he3_ch3
+    symbol: T + He3 branch 3
+    reactivity_channel: sigmav_THe3_ch3
+    energy:
+      value: 12.10
+      unit: MeV

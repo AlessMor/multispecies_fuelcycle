@@ -1,0 +1,24 @@
+# Configuration for Sobol sensitivity analysis (lump model)
+# Uses Saltelli sampling scheme for efficient Sobol index estimation
+
+# Analysis settings
+analysis_type: dd_startup_tseeded
+method: sobol
+
+# Sobol-specific parameters
+n_samples: 1000          # Base samples N (total evaluations = N × (2k + 2))
+seed: 42                # Random seed for reproducibility
+output_metrics:
+  - t_startup
+  - unrealized_profits
+
+# Simulation parameters
+vector_length: 200      # Time vector resolution
+max_simulation_time: 31536000  # 1 year in seconds
+
+# Performance settings
+n_jobs: null              # Parallel workers (auto-detect optimal)
+
+# Output settings
+output_dir: outputs
+verbose: true

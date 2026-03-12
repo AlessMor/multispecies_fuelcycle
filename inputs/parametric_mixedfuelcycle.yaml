@@ -1,0 +1,20 @@
+# Configuration for ddstartup multispecies parametric analysis
+
+analysis_type: multispecies
+method: parametric
+
+vector_length: 200
+max_simulation_time: 315360000  # 10 years [s]
+targets:
+  - target_specie: T
+    metric: fraction
+    value: 0.5
+
+
+n_jobs: null
+chunk_size: null
+batch_size: null
+
+output_dir: outputs
+verbose: true
+filter: null

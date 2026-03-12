@@ -1,0 +1,93 @@
+# Dictionary of allowed species, their aliases, fixed physical properties,
+# and solver defaults.
+species:
+  D:
+    aliases:
+    - d
+    - deuterium
+    - Deuterium
+    - H2
+    physical_properties:
+      mass_kg: 3.3443256801323993e-27
+      lambda_decay: 0.0
+    defaults:
+      f_0: 0.5
+      tau_p: 5.0
+      tau_ifc: 14400.0
+      tau_ofc: .inf # assuming no OFC (not bred in blanket)
+      N_ofc_0: 0.0
+      N_ifc_0: 0.0
+      N_stor_0: 0.0
+      N_stor_min: 1e+21 # minimum number of atoms in a pellet in Abdou 2021 - equivalent to 1mm diameter pellet (usually for LFS injection for ELM pacing)
+      Ndot_max: .inf
+      inject_from_storage: true
+      injection_mode: auto
+      injection_custom_function: "0.0"
+      enable_plasma_channel: true
+  T:
+    aliases:
+    - t
+    - tritium
+    - Tritium
+    - H3
+    physical_properties:
+      mass_kg: 5.0081858248655999e-27
+      lambda_decay: 1.7828335004569908e-09
+    defaults:
+      f_0: 0.0
+      tau_p: 5.0
+      tau_ifc: 14400.0
+      tau_ofc: .inf
+      N_ofc_0: 0.0
+      N_ifc_0: 0.0
+      N_stor_0: 0.0
+      N_stor_min: 1e+21 # minimum number of atoms in a pellet in Abdou 2021 - equivalent to 1mm diameter pellet (usually for LFS injection for ELM pacing)
+      Ndot_max: .inf
+      inject_from_storage: true
+      injection_mode: auto
+      injection_custom_function: "0.0"
+      enable_plasma_channel: true
+  He3:
+    aliases:
+    - he3
+    - helium3
+    - Helium3
+    physical_properties:
+      mass_kg: 5.0081858248655999e-27
+      lambda_decay: 0.0
+    defaults:
+      f_0: 0.5
+      tau_p: 5.0
+      tau_ifc: 28800.0
+      tau_ofc: .inf # assuming no OFC (not bred in blanket)
+      N_ofc_0: 0.0
+      N_ifc_0: 0.0
+      N_stor_0: 0.0
+      N_stor_min: 1e+21 # minimum number of atoms in a pellet in Abdou 2021
+      Ndot_max: .inf
+      inject_from_storage: true
+      injection_mode: auto
+      injection_custom_function: "0.0"
+      enable_plasma_channel: true
+  He4:
+    aliases:
+    - he4
+    - helium4
+    - Helium4
+    physical_properties:
+      mass_kg: 6.6464769890512941e-27
+      lambda_decay: 0.0
+    defaults:
+      f_0: 0.0
+      tau_p: 5.0
+      tau_ifc: 28800.0
+      tau_ofc: .inf # assuming no OFC (not bred in blanket)
+      N_ofc_0: 0.0
+      N_ifc_0: 0.0
+      N_stor_0: 0.0
+      N_stor_min: 1e+21
+      Ndot_max: .inf
+      inject_from_storage: true
+      injection_mode: auto
+      injection_custom_function: "0.0"
+      enable_plasma_channel: true

@@ -1,0 +1,77 @@
+# Example parameter set for ddstartup shared across multispecies/lump/T_seeded.
+
+parameters:
+  # Generic/global parameters
+  V_plasma_field:
+    type: scalar
+    value: 2000
+    unit: m^3
+
+  T_i_field:
+    type: vector
+    values: [14, 20]
+    unit: keV
+
+  n_tot_field:
+    type: scalar
+    value: 7.0e19
+    unit: 1/m^3
+
+  TBR_DT_field:
+    type: scalar
+    value: 1.3
+    unit: dimensionless
+
+  TBR_DDn_field:
+    type: scalar
+    value: 1.0
+    unit: dimensionless
+
+  species_params:
+    D:
+      f_0: {type: scalar, value: 0.5}
+      tau_p: {type: scalar, value: 5.0, unit: s}
+      lambda_decay: {type: scalar, value: 0.0, unit: 1/s}
+      tau_ifc: {type: scalar, value: 14400, unit: s}
+      tau_ofc: {type: scalar, value: 7200, unit: s}
+      N_ifc_0: {type: scalar, value: 0.0}
+      N_stor_0: {type: scalar, value: 0.0}
+      N_stor_min: {type: scalar, value: 0.0}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}
+
+    T:
+      f_0: {type: scalar, value: 0.0}
+      tau_p: {type: scalar, value: 5.0, unit: s}
+      lambda_decay: {type: scalar, value: 1.782834e-09, unit: 1/s}
+      tau_ifc: {type: scalar, value: 14400, unit: s}
+      tau_ofc: {type: scalar, value: 7200, unit: s}
+      N_ifc_0: {type: scalar, value: 0.0}
+      N_stor_0: {type: scalar, value: 0.0}
+      N_stor_min: {type: scalar, value: 1.996731e23}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}
+
+    He3:
+      f_0: {type: scalar, value: 0.5}
+      tau_p: {type: scalar, value: 5.0, unit: s}
+      lambda_decay: {type: scalar, value: 0.0, unit: 1/s}
+      tau_ifc: {type: scalar, value: 28800, unit: s}
+      tau_ofc: {type: scalar, value: 86400, unit: s}
+      N_ifc_0: {type: scalar, value: 0.0}
+      N_stor_0: {type: scalar, value: 0.0}
+      N_stor_min: {type: scalar, value: 0.0}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}
+
+    He4:
+      f_0: {type: scalar, value: 0.0}
+      tau_p: {type: scalar, value: 5.0, unit: s}
+      lambda_decay: {type: scalar, value: 0.0, unit: 1/s}
+      tau_ifc: {type: scalar, value: 28800, unit: s}
+      tau_ofc: {type: scalar, value: inf, unit: s}
+      N_ifc_0: {type: scalar, value: 0.0}
+      N_stor_0: {type: scalar, value: 0.0}
+      N_stor_min: {type: scalar, value: 0.0}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}

@@ -1,0 +1,94 @@
+# Shared parameter configuration used by integration tests.
+# Keeps two V_plasma points and fixed remaining inputs.
+
+parameters:
+  V_plasma_field:
+    type: linear
+    min: 150
+    max: 1000
+    points: 2
+    unit: m^3
+    description: Plasma volume
+
+  T_i_field:
+    type: scalar
+    value: 14
+    unit: keV
+    description: Ion temperature
+
+  n_tot_field:
+    type: scalar
+    value: 1.7e20
+    unit: 1/m^3
+    description: Total particle density
+
+  TBR_DT_field:
+    type: scalar
+    value: 1.1
+    unit: dimensionless
+    description: Tritium breeding ratio for DT reactions
+
+  TBR_DDn_field:
+    type: scalar
+    value: 0.7
+    unit: dimensionless
+    description: Tritium breeding ratio for DD neutron branch
+
+  eta_th_field:
+    type: scalar
+    value: 0.35
+    unit: dimensionless
+    description: Thermal conversion efficiency
+
+  capacity_factor_field:
+    type: scalar
+    value: 0.75
+    unit: dimensionless
+    description: Plant capacity factor
+
+  price_of_electricity_field:
+    type: scalar
+    value: 0.25
+    unit: 1/kWh
+    description: Price of electricity
+
+  species_params:
+    D:
+      f_0: {type: scalar, value: 1.0}
+      tau_p: {type: scalar, value: 0.75, unit: s}
+      lambda_decay: {type: scalar, value: 0.0, unit: 1/s}
+      tau_ifc: {type: scalar, value: 14400, unit: s}
+      tau_ofc: {type: scalar, value: 7200, unit: s}
+      N_stor_min: {type: scalar, value: 0.0}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}
+
+    T:
+      f_0: {type: scalar, value: 0.0}
+      tau_p: {type: scalar, value: 0.75, unit: s}
+      lambda_decay: {type: scalar, value: 1.782834e-09, unit: 1/s}
+      tau_ifc: {type: scalar, value: 14400, unit: s}
+      tau_ofc: {type: scalar, value: 7200, unit: s}
+      N_stor_min: {type: scalar, value: 1.9967310212201592e26}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}
+
+    He3:
+      f_0: {type: scalar, value: 0.0}
+      tau_p: {type: scalar, value: 1.0, unit: s}
+      lambda_decay: {type: scalar, value: 0.0, unit: 1/s}
+      tau_ifc: {type: scalar, value: 28800, unit: s}
+      tau_ofc: {type: scalar, value: 86400, unit: s}
+      N_stor_min: {type: scalar, value: 0.0}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}
+
+    He4:
+      f_0: {type: scalar, value: 0.0}
+      tau_p: {type: scalar, value: 1.0, unit: s}
+      lambda_decay: {type: scalar, value: 0.0, unit: 1/s}
+      tau_ifc: {type: scalar, value: 28800, unit: s}
+      tau_ofc: {type: scalar, value: inf, unit: s}
+      N_stor_min: {type: scalar, value: 0.0}
+      Ndot_max: {type: scalar, value: inf, unit: 1/s}
+      enable_plasma_channel: {type: scalar, value: true}

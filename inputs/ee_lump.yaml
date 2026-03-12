@@ -1,0 +1,26 @@
+# Elementary Effects Configuration for DD Startup Analysis (Lump model)
+# This configuration uses the Morris method for sensitivity analysis
+
+# Analysis settings
+analysis_type: 'dd_startup_lump'
+method: 'elementary_effects'         # Use Elementary Effects (Morris) method
+
+# Elementary Effects specific parameters
+num_trajectories: 100000                # Number of random trajectories (lump is fast, can use more)
+p_levels: 6                          # Grid discretization levels (4 or 6 typical)
+output_metrics:                      # Output variables to analyze
+  - 't_startup'
+  - 'unrealized_profits'
+
+# Time and output settings
+max_simulation_time: 315360000        # 10 year in seconds
+vector_length: 200                   # Number of time points to store
+output_dir: 'outputs'                # Output directory
+
+# Parallel processing (optional - will auto-detect if not specified)
+n_jobs: null             # Auto-detect for optimal parallelization
+chunk_size: null         # null for auto-calculate
+batch_size: null         # null for auto-calculate
+
+# Display options
+verbose: true                        # Print detailed progress information

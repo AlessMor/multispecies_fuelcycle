@@ -1,0 +1,19 @@
+# Configuration for parametric lump analysis
+
+# Analysis settings
+analysis_type: dd_startup_lump
+method: parametric
+
+
+# Analysis-specific parameters
+vector_length: 100      # default is 100
+max_simulation_time: 315360000  # in seconds. default is 315360000 (10 years)
+
+# Performance settings
+n_jobs: null           # null for auto-detect, or specify number
+chunk_size: null       # null for auto-calculate, or specify
+batch_size: null    # null for auto-calculate, or specify
+
+# Output settings
+output_dir: outputs   #default is 'outputs'  
+verbose: true
