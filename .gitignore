@@ -198,3 +198,6 @@ outputs/
 
 # Windows Zone.Identifier metadata files
 *:Zone.Identifier
+
+
+/examples/Multispecies/old_pngs/

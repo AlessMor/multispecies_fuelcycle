@@ -244,9 +244,7 @@ def sigmav_THe3_He5p(ion_temp_profile: float64 | NDArray[np.float64]) -> float64
 
     This is a placeholder function that returns zero for all temperatures, as
     this channel is not expected to contribute significantly to overall fusion
-    reactivity. This is intentionally a placeholder API so T+3He channels can
-    be wired in higher-level solvers without changing model structure when a
-    validated parametrization is added later.
+    reactivity.
 
     Args:
         ion_temp_profile: ion temperature profile [keV], scalar or array-like
